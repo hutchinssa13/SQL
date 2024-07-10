@@ -60,7 +60,7 @@ VALUES
 
 
 --The average revenue for each industry. What industry is most profitable on average?
-SELECT industry, ROUND(AVG(revenue),2)
+SELECT industry, ROUND(AVG(revenue),2) AS Avg_revenue
 FROM fortune_companies
 GROUP BY industry
 ORDER BY AVG(revenue) desc;
