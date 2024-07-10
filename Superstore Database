@@ -53,7 +53,7 @@ FROM superstore
 WHERE average_rating > 4.5
 ORDER BY average_rating DESC;
 
-# Names of items that have 25 or less items in stock.
+#6 Names of items that have 25 or less items in stock.
 SELECT item_name
 FROM superstore
 WHERE stock_quantity <= 25;
