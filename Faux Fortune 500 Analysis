@@ -58,6 +58,14 @@ VALUES
 
 
 
+--Company's that have healthcare benefits, more than 14 paid days off, not in Healthcare, and the revenue per employee ratio is equal or over .10, list from highest to lowest revenue per employee.
+SELECT *
+FROM fortune_companies
+WHERE healthcare_benefits =1 
+AND paid_time_off_days > 15
+AND industry != 'Healthcare'
+AND revenue/employees >= 0.1
+ORDER BY (revenue/employees) desc;
 
 --The average revenue for each industry with more or equal to 250 in revenue. What are the industries with more than 250 revenue on average?
 SELECT industry, ROUND(AVG(revenue),2) AS Avg_revenue
