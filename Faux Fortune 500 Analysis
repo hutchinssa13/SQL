@@ -59,10 +59,11 @@ VALUES
 
 
 
---The average revenue for each industry. What industry is most profitable on average?
+--The average revenue for each industry with more or equal to 250 in revenue. What are the industries with more than 250 revenue on average?
 SELECT industry, ROUND(AVG(revenue),2) AS Avg_revenue
 FROM fortune_companies
 GROUP BY industry
+HAVING Avg_revenue >=250
 ORDER BY AVG(revenue) desc;
 
 --select the companies that have more than or equal to 300 in revenue and less than or equal to 2500 employees. Who makes the most money with the least amount of people? How long do people stay at those companies?
