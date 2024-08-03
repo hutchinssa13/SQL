@@ -41,3 +41,28 @@ SELECT product, SUM(quantity), location
 FROM FebSales
 WHERE location like "%Los Angeles%"
 GROUP BY product;
+
+--Which locations in New York received at least 3 orders in January, and how many orders did they each receive? (Hint: use HAVING).
+SELECT location, count(orderid)
+FROM Jansales
+WHERE location like "%NY%"
+AND length(orderid) = 6 
+AND orderid != 'Order ID'
+GROUP BY location
+HAVING count(orderid) >2;
+
+--How many of each type of headphone were sold in February?
+SELECT product, SUM(Quantity) as quantity
+FROM Febsales
+WHERE Product like "%headphones%"
+AND length(orderid) = 6 
+AND orderid != 'Order ID'
+GROUP BY Product;
+
+--What was the average amount spent per account in February?
+--(Hints: For this question, we want the average amount spent / number of accounts, not the amount spent by each account. 
+SELECT ROUND(AVG(Quantity*price),2) AS avg_spent
+FROM FebSales
+JOIN customers ON customers.order_id=FebSales.orderID
+WHERE length(orderid) = 6 
+AND orderid != 'Order ID';
