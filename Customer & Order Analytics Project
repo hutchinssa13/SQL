@@ -60,9 +60,24 @@ AND orderid != 'Order ID'
 GROUP BY Product;
 
 --What was the average amount spent per account in February?
---(Hints: For this question, we want the average amount spent / number of accounts, not the amount spent by each account. 
+--(For this question, we want the average amount spent for all accounts, not the amount spent by each account.)
 SELECT ROUND(AVG(Quantity*price),2) AS avg_spent
 FROM FebSales
 JOIN customers ON customers.order_id=FebSales.orderID
 WHERE length(orderid) = 6 
 AND orderid != 'Order ID';
+
+--What was the average quantity of products purchased per account in February? 
+--(We want the overall average, not the average for each account individually).
+SELECT SUM(quantity)/count(acctnum) as avg_quantity
+FROM customers
+JOIN FebSales ON customers.order_id=FebSales.orderID
+WHERE length(orderid) = 6 
+AND orderid != 'Order ID';
+
+--Which product brought in the most revenue in January and how much revenue did it bring in total?
+SELECT product, SUM(quantity*price) as Revenue
+FROM JanSales
+GROUP BY product 
+ORDER BY Revenue desc
+Limit 1;
