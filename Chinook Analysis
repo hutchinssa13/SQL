@@ -37,3 +37,15 @@ WHERE invoicedate like "2009%";
 --What are the total sales for 2009?
 SELECT ROUND(SUM(Total), 2) as "2009_Invoices_Total" FROM invoices
 WHERE invoicedate like "2009%";
+
+--Write a query that includes the purchased track name with each invoice line ID.
+SELECT Name, invoicelineid FROM invoice_items
+JOIN tracks ON tracks.TrackId = invoice_items.TrackId
+GROUP BY invoicelineid;
+
+--Write a query that includes the purchased track name AND artist name with each invoice line ID.
+SELECT t.Name as Track, a.Name as Artist, invoicelineid FROM invoice_items
+JOIN tracks t ON t.TrackId = invoice_items.TrackId
+JOIN albums al ON al.albumid = t.albumid
+JOIN artists a ON a.artistid = al.artistid
+GROUP BY invoicelineid;
