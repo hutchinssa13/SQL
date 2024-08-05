@@ -49,3 +49,35 @@ JOIN tracks t ON t.TrackId = invoice_items.TrackId
 JOIN albums al ON al.albumid = t.albumid
 JOIN artists a ON a.artistid = al.artistid
 GROUP BY invoicelineid;
+
+--Write a query that includes the purchased track name AND artist name with each invoice line ID.
+SELECT t.Name as Track, a.Name as Artist, invoicelineid FROM invoice_items
+JOIN tracks t ON t.TrackId = invoice_items.TrackId
+JOIN albums al ON al.albumid = t.albumid
+JOIN artists a ON a.artistid = al.artistid
+GROUP BY invoicelineid;
+
+--Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
+SELECT t.trackid, t.name as Track, al.Title as Album, ar.Name as Artist, mt.Name as media_type, g.Name as genre
+FROM tracks t
+JOIN albums al ON al.albumid = t.albumid
+JOIN media_types mt ON mt.mediatypeid = t.mediatypeid
+JOIN genres g ON g.genreid = t.genreid
+JOIN artists ar ON ar.artistid = al.artistid
+ORDER BY Artist;
+
+--Show the total sales made by each sales agent.
+SELECT e.Firstname, e.lastname, ROUND(SUM(Total), 2) as Total_sales FROM invoices
+JOIN customers ON customers.CustomerId = invoices.CustomerId
+JOIN employees e ON e.EmployeeId = customers.SupportRepId
+GROUP BY e.lastname;
+
+
+--Which sales agent made the most dollars in sales in 2009?
+SELECT e.Firstname, e.lastname, ROUND(SUM(Total), 2) as Total_sales FROM invoices
+JOIN customers ON customers.CustomerId = invoices.CustomerId
+JOIN employees e ON e.EmployeeId = customers.SupportRepId
+WHERE invoicedate like "2009%"
+GROUP BY e.lastname
+ORDER BY Total_sales desc
+LIMIT 1;
