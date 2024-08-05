@@ -5,10 +5,19 @@ WITH safety_rating AS (
 SELECT street, AVG(safetyrating) AS avg_safety_rating
 FROM CityBikeLanes
 GROUP BY street)
-     
 SELECT street, avg_safety_rating, "Safe Lane" as label
 FROM safety_rating
 WHERE avg_safety_rating >= 4;
+
+--List of all the bike lanes, both safety ratings for each lane given by the two technicians, 
+--the average safety rating for each lane, and a label with the recommendation as "Remove", "Leave As-Is", or "Improvements Needed".
+
+SELECT street, safetyrating, AVG(safetyrating) OVER (Partition BY street) as Avg_Safety_rating,
+CASE WHEN AVG(safetyrating)  OVER (Partition BY street) >=4 THEN "Leave As-Is"
+WHEN AVG(safetyrating)  OVER (Partition BY street) < 2.5 THEN "Remove"
+ELSE "Improvements Needed"
+END AS 'recommendation'
+FROM CityBikeLanes;
 
 # The table
 
