@@ -1,0 +1,39 @@
+--Show Customers (their full names, customer ID, and country) who are not in the US. (Hint: != or <> can be used to say "is not equal to").
+SELECT FIRSTNAME, LastName, customerId, country FROM customers
+WHERE country != "USA";
+
+--Show only the Customers from Brazil.
+SELECT * FROM customers
+WHERE country = "Brazil";
+
+--Find the Invoices of customers who are from Brazil. The resulting table should show the customer's full name, Invoice ID, Date of the invoice, and billing country.
+SELECT firstname, lastname, invoiceid, invoicedate, billingcountry FROM customers
+JOIN invoices ON invoices.CustomerId = customers.CustomerId
+WHERE country = "Brazil";
+
+--Show the Employees who are Sales Agents.
+SELECT firstname, lastname, Title FROM employees
+WHERE Title like "%Sales%Agent%";
+
+--Find a unique/distinct list of billing countries from the Invoice table.
+SELECT DISTINCT(billingcountry) FROM invoices
+ORDER BY billingcountry;
+
+--Provide a query that shows the invoices associated with each sales agent. The resulting table should include the Sales Agent's full name.
+SELECT e.FirstName, e.LastName, InvoiceId FROM invoices
+JOIN customers ON customers.CustomerId = invoices.CustomerId
+JOIN employees e ON e.EmployeeId = customers.SupportRepId;
+
+--Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
+SELECT invoiceid, total, c.FirstName as Cust_First , c.LastName as Cust_Last, country, e.FirstName as EE_First, e.LastName as EE_Last FROM invoices
+JOIN customers c ON c.CustomerId = invoices.CustomerId
+JOIN employees e ON e.EmployeeId = c.SupportRepId
+ORDER BY e.lastname;
+
+--How many Invoices were there in 2009?
+SELECT COUNT(invoicedate) as Total_num_of_2009_Invoices FROM invoices
+WHERE invoicedate like "2009%";
+
+--What are the total sales for 2009?
+SELECT ROUND(SUM(Total), 2) as "2009_Invoices_Total" FROM invoices
+WHERE invoicedate like "2009%";
